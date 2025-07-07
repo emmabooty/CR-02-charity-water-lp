@@ -80,11 +80,10 @@ nav a {
 
 .right-images {
   flex: 1 1 400px;
-  display: grid;
-  grid-template-columns: 1fr 1fr;
-  grid-gap: 1rem;
-  align-items: center;
-  justify-items: center;
+  display: flex;
+  flex-direction: row;
+  align-items: flex-start;
+  gap: 0.5rem;
 }
 
 .right-images img {
@@ -93,14 +92,19 @@ nav a {
   border-radius: 4px;
 }
 
-.img-large {
-  grid-column: 1 / span 2;
+.right-images .img-large,
+.right-images .img-small {
+  max-width: 400px;
+  height: 400px;
+  object-fit: cover;
+  border-radius: 4px;
 }
 
 .form-section {
-  background-color: #fff;
+  background-color: #ffce00; /* Use the same yellow as the main section */
   padding: 2rem;
   text-align: center;
+  border-radius: 12px; /* Added border-radius for a card look */
 }
 
 .form-section h2 {
@@ -139,8 +143,20 @@ input[type="submit"] {
 }
 
 @keyframes confetti-fall {
-  0% {transform: translateY(-100px) rotate(0deg);}
-  100% {transform: translateY(600px) rotate(360deg);}
+  0% {transform: translateY(600px) rotate(0deg);}
+  100% {transform: translateY(-100px) rotate(360deg);}
+}
+
+@keyframes confetti-explode {
+  0% {
+    opacity: 1;
+    transform: translate(0, 0) scale(1) rotate(0deg);
+  }
+  100% {
+    opacity: 0;
+    /* Move confetti in a random direction and scale up for explosion */
+    transform: var(--explode-transform) scale(1.5) rotate(360deg);
+  }
 }
 
 .confetti {
@@ -148,19 +164,68 @@ input[type="submit"] {
   width: 10px;
   height: 10px;
   background-color: red;
-  animation: confetti-fall 3s linear infinite;
+  /* Use the new explode animation */
+  animation: confetti-explode 1s ease-out forwards;
 }
 
-@media screen and (max-width: 768px) {
+@media screen and (max-width: 900px) {
   .main-section {
     flex-direction: column;
+    padding: 1rem;
   }
-
+  .left-content {
+    padding: 1rem;
+    max-width: 100%;
+    text-align: center;
+  }
   .right-images {
-    grid-template-columns: 1fr;
+    flex-direction: row;
+    justify-content: center;
+    gap: 0.5rem;
+    margin-top: 1rem;
   }
+  .right-images img {
+    max-width: 120px;
+    height: 120px;
+  }
+  .logo img {
+    height: 60px;
+  }
+  header {
+    flex-direction: column;
+    align-items: center;
+    padding: 1rem;
+  }
+  nav a {
+    margin-left: 1rem;
+    margin-right: 1rem;
+    display: inline-block;
+    margin-top: 0.5rem;
+  }
+}
 
-  .img-large {
-    grid-column: auto;
+@media screen and (max-width: 600px) {
+  .main-section {
+    padding: 0.5rem;
+  }
+  .left-content h1 {
+    font-size: 2rem;
+  }
+  .left-content h2 {
+    font-size: 1.2rem;
+  }
+  .form-section {
+    padding: 1rem;
+  }
+  .logo img {
+    height: 36px;
+  }
+  .right-images img {
+    max-width: 80px;
+    height: 80px;
+  }
+  nav a {
+    font-size: 0.9rem;
+    margin: 0.3rem;
   }
 }
